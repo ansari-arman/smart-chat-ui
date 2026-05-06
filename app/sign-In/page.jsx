@@ -26,7 +26,7 @@ export default function SignInPage() {
     <div className="max-h-screen bg-white flex p-10 mb-20">
 
       {/* ── Left Panel ── */}
-      <div className="hidden lg:flex lg:w-1/2 bg-white flex-col justify-center items-center border border-green-300 rounded-2xl shadow-l">
+      <div className="hidden lg:flex lg:w-1/2 bg-white flex-col justify-center items-center  rounded-2xl shadow-l">
 
         {/* Logo */}
         {/* <div className="flex items-center gap-2">

@@ -1,4 +1,28 @@
+'use client'
+import { useState } from "react";
+
 export default function RequestDemoPage() {
+    let [firstName,setFirstName] = useState('');
+    let [lastName,setLastName] = useState('');
+    let [email,setEmail] = useState('');
+    let [phone,setPhone] = useState('');
+    let [message,setMessage] = useState('');
+
+    async function handleSubmit(e){
+        e.preventDefault();
+        let res = await fetch('http://localhost:4000/api/leads',{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({firstName,lastName,email,phone,message})
+        });
+
+        let data = await res.json();
+        if(res.ok){
+            console.log(data.info)
+        }else{
+            alert('Something went wrong try again')
+        }
+    }
   return (
     <main className="min-h-screen bg-white">
 
@@ -78,7 +102,7 @@ export default function RequestDemoPage() {
             sabhi input fields ke `name` attributes already set hain
             inhe POST /api/leads pe send karna hai
           */}
-          <form className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
             {/* name — POST body mein "name" field */}
             <div className="grid grid-cols-2 gap-3">
@@ -90,6 +114,8 @@ export default function RequestDemoPage() {
                   id="firstName"
                   name="firstName"
                   type="text"
+                  value={firstName}
+                  onChange={(e)=>setFirstName(e.target.value)}
                   placeholder="John"
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs text-black placeholder-gray-400 outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
                 />
@@ -102,6 +128,8 @@ export default function RequestDemoPage() {
                   id="lastName"
                   name="lastName"
                   type="text"
+                  value={lastName}
+                  onChange={(e)=>setLastName(e.target.value)}
                   placeholder="Smith"
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs text-black placeholder-gray-400 outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
                 />
@@ -117,6 +145,8 @@ export default function RequestDemoPage() {
                 id="email"
                 name="email"
                 type="email"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
                 placeholder="you@company.com"
                 className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs text-black placeholder-gray-400 outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
               />
@@ -131,13 +161,15 @@ export default function RequestDemoPage() {
                 id="phone"
                 name="phone"
                 type="tel"
+                value={phone}
+                onChange={(e)=>setPhone(e.target.value)}
                 placeholder="(555) 000-0000"
                 className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs text-black placeholder-gray-400 outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
               />
             </div>
 
             {/* company + industry — POST body mein "company" aur "industry" fields */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="company" className="text-[10px] font-medium text-gray-500">
                   Company name <span className="text-red-400">*</span>
@@ -154,10 +186,6 @@ export default function RequestDemoPage() {
                 <label htmlFor="industry" className="text-[10px] font-medium text-gray-500">
                   Industry <span className="text-red-400">*</span>
                 </label>
-                {/*
-                  industry dropdown — selected value POST body mein
-                  "industry" field ke roop mein jayegi
-                */}
                 <select
                   id="industry"
                   name="industry"
@@ -172,10 +200,10 @@ export default function RequestDemoPage() {
                   <option value="other">Other</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
             {/* businessSize — POST body mein "businessSize" field */}
-            <div className="flex flex-col gap-1.5">
+            {/* <div className="flex flex-col gap-1.5">
               <label htmlFor="businessSize" className="text-[10px] font-medium text-gray-500">
                 Business size
               </label>
@@ -190,7 +218,7 @@ export default function RequestDemoPage() {
                 <option value="21-50">21 – 50 employees</option>
                 <option value="50+">50+ employees</option>
               </select>
-            </div>
+            </div> */}
 
             {/* message — POST body mein "message" field (optional) */}
             <div className="flex flex-col gap-1.5">
@@ -201,6 +229,8 @@ export default function RequestDemoPage() {
                 id="message"
                 name="message"
                 rows={3}
+                value={message}
+                onChange={(e)=>setMessage(e.target.value)}
                 placeholder="E.g. I want to see how call booking works..."
                 className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs text-black placeholder-gray-400 outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors resize-none"
               />
