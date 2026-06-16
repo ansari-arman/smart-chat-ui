@@ -10,7 +10,12 @@ export default function RequestDemoPage() {
 
     async function handleSubmit(e){
         e.preventDefault();
-        let res = await fetch('http://localhost:4000/api/leads',{
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setPhone('');
+        setMessage('')
+        let res = await fetch('http://localhost:4000/leads',{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({firstName,lastName,email,phone,message})
@@ -18,9 +23,13 @@ export default function RequestDemoPage() {
 
         let data = await res.json();
         if(res.ok){
-            console.log(data.info)
+            // console.log(data.info)
+            alert(data.message)
+            
+            // alert('Sent demo request successfully')
         }else{
-            alert('Something went wrong try again')
+            alert(data.message)
+            // alert('Something went wrong try again')
         }
     }
   return (
